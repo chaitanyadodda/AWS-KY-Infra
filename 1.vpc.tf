@@ -36,6 +36,7 @@ resource "aws_security_group" "eks-sg" {
  #Create a Public Subnets.
  resource "aws_subnet" "publicsubnets" {    # Creating Public Subnets
    vpc_id =  aws_vpc.vpc.id
+   availability_zone = "us-west-1a"
    cidr_block = "${var.publicsubnet}"        # CIDR block of public subnets
    map_public_ip_on_launch = true
    enable_resource_name_dns_a_record_on_launch = true # enabling DNS on launch
@@ -43,6 +44,7 @@ resource "aws_security_group" "eks-sg" {
 
  resource "aws_subnet" "publicsubnetstwo" {    # Creating2nd  Public Subnets
    vpc_id =  aws_vpc.vpc.id
+   availability_zone = "us-west-1b"
    cidr_block = "${var.publicsubnettwo}"        # CIDR block of public subnets
    map_public_ip_on_launch = true
    enable_resource_name_dns_a_record_on_launch = true # enabling DNS on launch
@@ -51,10 +53,21 @@ resource "aws_security_group" "eks-sg" {
  #Create a Private Subnet                   # Creating Private Subnets
  resource "aws_subnet" "privatesubnets" {
    vpc_id =  aws_vpc.vpc.id
+   availability_zone = "us-west-1b"
    cidr_block = "${var.privatesubnet}"          # CIDR block of private subnets
    map_public_ip_on_launch = true
    enable_resource_name_dns_a_record_on_launch = true # enabling DNS on launch
  }
+
+#Create a Private Subnet                   # Creating Private Subnets
+ resource "aws_subnet" "privatesubnetstwo" {
+   vpc_id =  aws_vpc.vpc.id
+   availability_zone = "us-west-1a"
+   cidr_block = "${var.privatesubnettwo}"          # CIDR block of private subnets
+   map_public_ip_on_launch = true
+   enable_resource_name_dns_a_record_on_launch = true # enabling DNS on launch
+ }
+
 
 #creating Elastic IP for NAT gateway
 resource "aws_eip" "NAT" {
